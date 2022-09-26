@@ -27,7 +27,7 @@ contract BillOfExchange is Ownable {
 
     using SafeMath for uint256;
 
-    address public promisee;
+    address payable public promisee;
     address public promisor;
     string public promiseeName;
     string public promisorName;
@@ -39,6 +39,28 @@ contract BillOfExchange is Ownable {
     uint public dateOfEntry;
     uint public dateOfExpiry;
     string public naturalLanguage;
+    bool public paymentAccepted;
+
+    //below will probably be included in a separate mint contract
+    struct billInfo {
+        address promisee;
+        address promisor;
+        string promiseeName;
+        string promisorName;
+        uint billAmount;
+        string billDescription;
+        uint dateOfEntry;
+        uint dateOfExpiry;
+        bool promiseeConsent;
+        bool promisorConsent;
+        string naturalLanguage;
+    }
+
+    // event when billNFT is issued
+    event agreementReached();
+
+    mapping (bytes32 => billInfo) public bills;
+    mapping (bytes32 => bytes32) public billData;
 
 
     // initial constructor setting basic information needed
@@ -47,6 +69,7 @@ contract BillOfExchange is Ownable {
         promisor = _promisor;
         promiseeName = _promiseeName;
         promisorName = _promisorName;
+        owner = promisee;
     }
 
     // sets the amount for the BoE
@@ -59,14 +82,27 @@ contract BillOfExchange is Ownable {
         billDescription = _billDescription;
     }
 
+    // declares URL for IPFS natural language contract
+
+    function setNaturalLanguage (string memory _naturalLanguage) public promiseeOnly {
+        naturalLanguage = _naturalLanguage;
+    }
+
     // determines party consent
 
     function setPromiseeConsent() public promiseeOnly {
         promiseeConsent = true;
+        if (promisorConsent) {
+            setDateOfEntry();
+        }
     }
 
+    // if both consented, the NFT is minted
     function setPromisorConsent() public promisorOnly {
         promisorConsent = true;
+        if (promiseeConsent) {
+            setDateOfEntry();
+        }
     }
 
     // sets date of expiry
@@ -74,6 +110,33 @@ contract BillOfExchange is Ownable {
     function setDateOfExpiry(string memory _dateOfExpiry){
         dateOfExpiry = Date.setDateFromString(_dateOfExpiry);
     }
+
+    // set date of entry
+
+    function setDateOfEntry() internal {
+        dateOfEntry = block.timestamp;
+    }
+
+    // function to submit payment
+
+    function payBill () public payable needConsent promisorOnly {
+        require(msg.value == billAmount, "You must pay the amount stipulated");
+    }
+
+    // function for promisee to accept payment (still needs to have function which burns token when this is done)
+
+    function acceptPayment () public promiseeOnly {
+        paymentAccepted = true;
+        promisee.transfer(billAmount);
+    }
+
+    /**
+    *   Below functions still to be implemented. 
+    *   1. function to mint bill
+    *   2. acceptance leading to token burn
+    *   3. function to burn token
+    *   4. function to kill contract?
+    */
 
     // modifiers
 
@@ -96,7 +159,5 @@ contract BillOfExchange is Ownable {
         require(promiseeConsent == true && promisorConsent == true);
         _;
     }
-
-
 
 }
