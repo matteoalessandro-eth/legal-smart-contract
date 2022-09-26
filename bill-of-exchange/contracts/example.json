@@ -1,0 +1,56 @@
+{
+    "name": "",
+    "description": "",
+    "external_url": "",
+    "attributes": [
+        {
+            "trait_type": "Promisor Address",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisor Name",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisee Address",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisee Name",
+            "value": ""
+        },
+        {
+            "trait_type": "Bill Amount",
+            "value": ""
+        },
+        {
+            "trait_type": "Bill Description",
+            "value": ""
+        },
+        {
+            "trait_type": "Date of Entry",
+            "value": ""
+        },
+        {
+            "trait_type": "Date of Expiry",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisor Consent",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisor Consent Date",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisee Consent",
+            "value": ""
+        },
+        {
+            "trait_type": "Promisee Consent Date",
+            "value": ""
+        }
+    ]
+
+}

@@ -36,7 +36,8 @@ The first implementation which will be considered is the use of smart contracts 
     e. The date of expiry of the BoE (when the payment is due) - this is converted to a Unix timestamp from a regular date
     f. The link to the natural language version of the BoE
     g. The date of entry of the BoE - this is automatically calculated when consent has been given by both parties
-3. When both parties have agreed, the smart contract issues an NFT, with linked metadata containing all the info, which is sent to the Promisee.
-4. The Promisor will then pay the amount due into the smart contract through a function, with the smart contract holding the amount until it is accepted by the Promisee
-5. Once the Promisee has accepted the payment, the funds are transferred to their address, and the token is burnt
+3. The consent is then acquired from both parties, with the date being recorded
+4. When both parties have agreed, the smart contract issues an NFT, with linked metadata containing all the info, which is sent to the Promisee.
+5. The Promisor will then pay the amount due into the smart contract through a function, with the smart contract holding the amount until it is accepted by the Promisee
+6. Once the Promisee has accepted the payment, the funds are transferred to their address, and the token is burnt
 

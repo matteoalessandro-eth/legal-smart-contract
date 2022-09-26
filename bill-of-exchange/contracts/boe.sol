@@ -40,6 +40,8 @@ contract BillOfExchange is Ownable {
     uint public dateOfExpiry;
     string public naturalLanguage;
     bool public paymentAccepted;
+    uint public dateOfPromisorConsent;
+    uint public dateOfPromiseeConsent;
 
     //below will probably be included in a separate mint contract
     struct billInfo {
@@ -81,10 +83,11 @@ contract BillOfExchange is Ownable {
         naturalLanguage = _naturalLanguage;
     }
 
-    // determines party consent
+    // determines party consent and date of consent
 
     function setPromiseeConsent() public promiseeOnly {
         promiseeConsent = true;
+        dateOfPromiseeConsent = block.timestamp;
         if (promisorConsent) {
             setDateOfEntry();
         }
@@ -93,6 +96,7 @@ contract BillOfExchange is Ownable {
     // if both consented, the date of entry is calculated. This will later lead to the NFT being minted.
     function setPromisorConsent() public promisorOnly {
         promisorConsent = true;
+        dateOfPromisorConsent = block.timestamp;
         if (promiseeConsent) {
             setDateOfEntry();
         }
