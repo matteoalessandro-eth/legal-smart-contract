@@ -41,3 +41,8 @@ The first implementation which will be considered is the use of smart contracts 
 5. The Promisor will then pay the amount due into the smart contract through a function, with the smart contract holding the amount until it is accepted by the Promisee
 6. Once the Promisee has accepted the payment, the funds are transferred to their address, and the token is burnt
 
+#### To Do
+
+1. Develop NFT mint function
+2. Look into deployment using scripts
+3. Finalise functions
