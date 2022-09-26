@@ -18,7 +18,7 @@ The first implementation which will be considered is the use of smart contracts 
 #### NFT Data Needed
 1. Identification of both parties
 
-2. Information about the BoE including:
+2. Information about the BoE including: </br>
     a. Amount </br>
     b. Payment date </br>
     c. Jurisdiction </br>
@@ -28,7 +28,7 @@ The first implementation which will be considered is the use of smart contracts 
 #### System Architecture
 
 1. A main smart contract is initiated by the Promisee (the person who is due the money)
-2. This smart contract will contain the following information about the BoE:
+2. This smart contract will contain the following information about the BoE: </br>
     a. Wallet addresses of both parties </br>
     b. Names of both parties </br>
     c. Amount of the BoE </br>
