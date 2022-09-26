@@ -56,13 +56,6 @@ contract BillOfExchange is Ownable {
         string naturalLanguage;
     }
 
-    // event when billNFT is issued
-    event agreementReached();
-
-    mapping (bytes32 => billInfo) public bills;
-    mapping (bytes32 => bytes32) public billData;
-
-
     // initial constructor setting basic information needed
     constructor(address _promisee, address _promisor, string memory _promiseeName, string memory _promisorName) public {
         promisee = _promisee;
@@ -97,7 +90,7 @@ contract BillOfExchange is Ownable {
         }
     }
 
-    // if both consented, the NFT is minted
+    // if both consented, the date of entry is calculated. This will later lead to the NFT being minted.
     function setPromisorConsent() public promisorOnly {
         promisorConsent = true;
         if (promiseeConsent) {
@@ -121,13 +114,21 @@ contract BillOfExchange is Ownable {
 
     function payBill () public payable needConsent promisorOnly {
         require(msg.value == billAmount, "You must pay the amount stipulated");
+        billPaid = true;
     }
 
-    // function for promisee to accept payment (still needs to have function which burns token when this is done)
+    // function for promisee to accept payment, leading to contract being killed (still needs to have function which burns token when this is done)
 
-    function acceptPayment () public promiseeOnly {
+    function acceptPayment () public promiseeOnly billHasBeenPaid {
         paymentAccepted = true;
         promisee.transfer(billAmount);
+        kill();
+    }
+
+    // function to kill smart contract once it has been concluded
+
+    function kill() promiseeOnly public {
+        selfdestruct(promisee);
     }
 
     /**
@@ -135,7 +136,6 @@ contract BillOfExchange is Ownable {
     *   1. function to mint bill
     *   2. acceptance leading to token burn
     *   3. function to burn token
-    *   4. function to kill contract?
     */
 
     // modifiers
@@ -157,6 +157,11 @@ contract BillOfExchange is Ownable {
 
     modifier needConsent(){
         require(promiseeConsent == true && promisorConsent == true);
+        _;
+    }
+
+    modifier billHasBeenPaid(){
+        require(billPaid == true, "Payment must be made before withdrawing funds");
         _;
     }
 
