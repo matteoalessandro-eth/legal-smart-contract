@@ -23,63 +23,54 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./Date.sol";
 
 
-contract BillOfExchange is Ownable {
+contract BillOfExchange {
 
     using SafeMath for uint256;
 
-    address payable public promisee;
-    address public promisor;
-    string public promiseeName;
-    string public promisorName;
-    uint public billAmount;
-    string public billDescription;
-    bool public promiseeConsent = false;
-    bool public promisorConsent = false;
-    bool public billPaid = false;
-    uint public dateOfEntry;
-    uint public dateOfExpiry;
-    string public naturalLanguage;
-    bool public paymentAccepted;
-    uint public dateOfPromisorConsent;
-    uint public dateOfPromiseeConsent;
+    address payable private promisee;
+    address private promisor;
+    string private promiseeName;
+    string private promisorName;
+    uint private billAmount;
+    string private billDescription;
+    bool private promiseeConsent = false;
+    bool private promisorConsent = false;
+    bool private billPaid = false;
+    uint private dateOfEntry;
+    string private dateOfExpiry;
+    string private naturalLanguage;
+    bool private paymentAccepted;
+    uint private dateOfPromisorConsent;
+    uint private dateOfPromiseeConsent;
 
     //below will probably be included in a separate mint contract
     struct billInfo {
         address promisee;
-        address promisor;
         string promiseeName;
+        address promisor;
         string promisorName;
         uint billAmount;
         string billDescription;
         uint dateOfEntry;
-        uint dateOfExpiry;
+        string dateOfExpiry;
         bool promiseeConsent;
+        uint dateOfPromiseeConsent;
         bool promisorConsent;
+        uint dateOfPromiseeConsent;
         string naturalLanguage;
     }
 
+    billInfo public bill;
+
     // initial constructor setting basic information needed
-    constructor(address _promisee, address _promisor, string memory _promiseeName, string memory _promisorName) public {
+    constructor(address _promisee, address _promisor, string memory _promiseeName, string memory _promisorName, uint _billAmount, string memory _billDescription, string memory _naturalLanguage, uint _dateOfExpiry) public {
         promisee = _promisee;
         promisor = _promisor;
         promiseeName = _promiseeName;
         promisorName = _promisorName;
-        owner = promisee;
-    }
-
-    // sets the amount for the BoE
-    function setBillAmount(uint _billAmount) public promiseeOnly {
         billAmount = _billAmount;
-    }
-
-    // sets the billDescription;
-    function setBillDescription(string memory _billDescription) public promiseeOnly {
         billDescription = _billDescription;
-    }
-
-    // declares URL for IPFS natural language contract
-
-    function setNaturalLanguage (string memory _naturalLanguage) public promiseeOnly {
+        dateOfExpiry = _dateOfExpiry;
         naturalLanguage = _naturalLanguage;
     }
 
@@ -102,16 +93,11 @@ contract BillOfExchange is Ownable {
         }
     }
 
-    // sets date of expiry
-
-    function setDateOfExpiry(string memory _dateOfExpiry){
-        dateOfExpiry = Date.setDateFromString(_dateOfExpiry);
-    }
-
     // set date of entry
 
     function setDateOfEntry() internal {
         dateOfEntry = block.timestamp;
+        setBillStruct();
     }
 
     // function to submit payment
@@ -134,6 +120,33 @@ contract BillOfExchange is Ownable {
     function kill() promiseeOnly public {
         selfdestruct(promisee);
     }
+
+    // function to push info to struct
+
+    function setBillStruct() internal {
+        bill = billInfo({
+            promisee: promisee,
+            promiseeName: promiseeName,
+            promisor: promisor,
+            promisorName: promisorName,
+            billAmount: billAmount,
+            billDescription: billDescription,
+            dateOfEntry: dateOfEntry,
+            dateOfExpiry: dateOfExpiry,
+            promiseeConsent: promiseeConsent,
+            dateOfPromiseeConsent: dateOfPromiseeConsent,
+            promisorConsent: promisorConsent,
+            naturalLanguage: naturalLanguage
+                        
+        });
+    }
+
+    // function to get bill data
+    function getInfo() public constant returns(address, string, address, string, uint, string, uint, string, bool, uint, bool, uint, string) {
+        return(bill.promisee, bill.promiseeName, bill.promisor, bill.promisorName, bill.billAmount, bill.billDescription, bill.dateOfEntry, bill.dateOfExpiry, bill.promiseeConsent, bill.dateOfPromiseeConsent, bill.promisorConsent, bill.dateOfPromiseeConsent, bill.naturalLanguage)
+    }
+
+
 
     /**
     *   Below functions still to be implemented. 
