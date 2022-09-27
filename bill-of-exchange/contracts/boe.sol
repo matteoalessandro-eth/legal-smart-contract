@@ -20,32 +20,19 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./Date.sol";
 
 
 contract BillOfExchange {
 
     using SafeMath for uint256;
 
-    address payable private promisee;
-    address private promisor;
-    string private promiseeName;
-    string private promisorName;
-    uint private billAmount;
-    string private billDescription;
-    bool private promiseeConsent = false;
-    bool private promisorConsent = false;
     bool private billPaid = false;
-    uint private dateOfEntry;
-    string private dateOfExpiry;
-    string private naturalLanguage;
     bool private paymentAccepted;
-    uint private dateOfPromisorConsent;
-    uint private dateOfPromiseeConsent;
+
 
     //below will probably be included in a separate mint contract
     struct billInfo {
-        address promisee;
+        address payable promisee;
         string promiseeName;
         address promisor;
         string promisorName;
@@ -56,39 +43,44 @@ contract BillOfExchange {
         bool promiseeConsent;
         uint dateOfPromiseeConsent;
         bool promisorConsent;
-        uint dateOfPromiseeConsent;
+        uint dateOfPromisorConsent;
         string naturalLanguage;
     }
 
-    billInfo public bill;
+    billInfo private bill;
 
-    // initial constructor setting basic information needed
-    constructor(address _promisee, address _promisor, string memory _promiseeName, string memory _promisorName, uint _billAmount, string memory _billDescription, string memory _naturalLanguage, uint _dateOfExpiry) public {
-        promisee = _promisee;
-        promisor = _promisor;
-        promiseeName = _promiseeName;
-        promisorName = _promisorName;
-        billAmount = _billAmount;
-        billDescription = _billDescription;
-        dateOfExpiry = _dateOfExpiry;
-        naturalLanguage = _naturalLanguage;
+    // initial constructor setting party info
+    constructor(address _promisor, string memory _promiseeName, string memory _promisorName) public {
+        bill.promisee = payable(msg.sender);
+        bill.promisor = _promisor;
+        bill.promiseeName = _promiseeName;
+        bill.promisorName = _promisorName;
+    }
+
+    // sets bill details
+
+    function setDetails (uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public promiseeOnly {
+        bill.billAmount = _billAmount;
+        bill.billDescription = _billDescription;
+        bill.dateOfExpiry = _dateOfExpiry;
+        bill.naturalLanguage = _naturalLanguage;
     }
 
     // determines party consent and date of consent
 
     function setPromiseeConsent() public promiseeOnly {
-        promiseeConsent = true;
-        dateOfPromiseeConsent = block.timestamp;
-        if (promisorConsent) {
+        bill.promiseeConsent = true;
+        bill.dateOfPromiseeConsent = block.timestamp;
+        if (bill.promisorConsent == true) {
             setDateOfEntry();
         }
     }
 
     // if both consented, the date of entry is calculated. This will later lead to the NFT being minted.
     function setPromisorConsent() public promisorOnly {
-        promisorConsent = true;
-        dateOfPromisorConsent = block.timestamp;
-        if (promiseeConsent) {
+        bill.promisorConsent = true;
+        bill.dateOfPromisorConsent = block.timestamp;
+        if (bill.promiseeConsent == true) {
             setDateOfEntry();
         }
     }
@@ -96,14 +88,13 @@ contract BillOfExchange {
     // set date of entry
 
     function setDateOfEntry() internal {
-        dateOfEntry = block.timestamp;
-        setBillStruct();
+        bill.dateOfEntry = block.timestamp;
     }
 
     // function to submit payment
 
     function payBill () public payable needConsent promisorOnly {
-        require(msg.value == billAmount, "You must pay the amount stipulated");
+        require(msg.value == bill.billAmount, "You must pay the amount stipulated");
         billPaid = true;
     }
 
@@ -111,39 +102,24 @@ contract BillOfExchange {
 
     function acceptPayment () public promiseeOnly billHasBeenPaid {
         paymentAccepted = true;
-        promisee.transfer(billAmount);
+        bill.promisee.transfer(bill.billAmount);
         kill();
     }
 
     // function to kill smart contract once it has been concluded
 
     function kill() promiseeOnly public {
-        selfdestruct(promisee);
+        selfdestruct(bill.promisee);
     }
 
-    // function to push info to struct
-
-    function setBillStruct() internal {
-        bill = billInfo({
-            promisee: promisee,
-            promiseeName: promiseeName,
-            promisor: promisor,
-            promisorName: promisorName,
-            billAmount: billAmount,
-            billDescription: billDescription,
-            dateOfEntry: dateOfEntry,
-            dateOfExpiry: dateOfExpiry,
-            promiseeConsent: promiseeConsent,
-            dateOfPromiseeConsent: dateOfPromiseeConsent,
-            promisorConsent: promisorConsent,
-            naturalLanguage: naturalLanguage
-                        
-        });
-    }
 
     // function to get bill data
-    function getInfo() public constant returns(address, string, address, string, uint, string, uint, string, bool, uint, bool, uint, string) {
-        return(bill.promisee, bill.promiseeName, bill.promisor, bill.promisorName, bill.billAmount, bill.billDescription, bill.dateOfEntry, bill.dateOfExpiry, bill.promiseeConsent, bill.dateOfPromiseeConsent, bill.promisorConsent, bill.dateOfPromiseeConsent, bill.naturalLanguage)
+    // function getInfo() public returns(address, string calldata, address, string calldata, uint, string calldata, uint, string calldata, bool, uint, bool, uint, string calldata) {
+    //     return(bill.promisee, bill.promiseeName, bill.promisor, bill.promisorName, bill.billAmount, bill.billDescription, bill.dateOfEntry, bill.dateOfExpiry, bill.promiseeConsent, bill.dateOfPromiseeConsent, bill.promisorConsent, bill.dateOfPromiseeConsent, bill.naturalLanguage);
+    // }
+
+    function getInfo() public view returns(billInfo memory){
+        return bill;
     }
 
 
@@ -158,22 +134,22 @@ contract BillOfExchange {
     // modifiers
 
     modifier promisorOnly(){
-        require(msg.sender == promisor, "only the promisor can send this message");
+        require(msg.sender == bill.promisor, "only the promisor can send this message");
         _;
     }
 
     modifier promiseeOnly(){
-        require(msg.sender == promisee, "only the promisee can send this message");
+        require(msg.sender == bill.promisee, "only the promisee can send this message");
         _;
     }
 
     modifier partiesOnly(){
-        require(msg.sender == promisor || msg.sender == promisee, "only parties to this agreement can send this message");
+        require(msg.sender == bill.promisor || msg.sender == bill.promisee, "only parties to this agreement can send this message");
         _;
     }
 
     modifier needConsent(){
-        require(promiseeConsent == true && promisorConsent == true);
+        require(bill.promiseeConsent == true && bill.promisorConsent == true);
         _;
     }
 
