@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 /**
 *
 *   @title Bills of Exchange Smart Contract
-*   @dev Implement bills of exchange through a smart contract which issues a token representative of the right
+*   @dev Implement bills of exchange through a smart contrac
 *   
 *   NOTE: This is purely a proof of concept, it is not to be used in real-life transactions as it has not been tested properly.   
 *
@@ -13,12 +13,8 @@ pragma solidity ^0.8.0;
 *   BillOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)
 */
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-
 
 contract BillOfExchange {
-
-    using SafeMath for uint256;
 
     // variables
     bool private billPaid = false;
