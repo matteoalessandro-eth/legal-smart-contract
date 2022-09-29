@@ -11,14 +11,8 @@ pragma solidity ^0.8.0;
 *
 *   Made use of:
 *   BillOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)
-*   DateUtils by Skeleton Codeworks (http://github.com/SkeletonCodeworks/DateUtils)
 */
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 
@@ -26,11 +20,12 @@ contract BillOfExchange {
 
     using SafeMath for uint256;
 
+    // variables
     bool private billPaid = false;
-    bool private paymentAccepted;
+    bool private paymentAccepted = false;
 
 
-    //below will probably be included in a separate mint contract
+    // struct containing bill info
     struct billInfo {
         address payable promisee;
         string promiseeName;
@@ -47,9 +42,10 @@ contract BillOfExchange {
         string naturalLanguage;
     }
 
+    // initialise struct which contains bill data
     billInfo private bill;
 
-    // initial constructor setting party info
+    // initial constructor setting party info and pushing it to struct
     constructor(address _promisor, string memory _promiseeName, string memory _promisorName) public {
         bill.promisee = payable(msg.sender);
         bill.promisor = _promisor;
@@ -57,8 +53,7 @@ contract BillOfExchange {
         bill.promisorName = _promisorName;
     }
 
-    // sets bill details
-
+    // function setting bill details and pushing them to struct
     function setDetails (uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public promiseeOnly {
         bill.billAmount = _billAmount;
         bill.billDescription = _billDescription;
@@ -66,8 +61,8 @@ contract BillOfExchange {
         bill.naturalLanguage = _naturalLanguage;
     }
 
-    // determines party consent and date of consent
-
+    // function setting party consent and date of consent, and pushes them to struct
+    // if both consented, the date of entry is calculated. 
     function setPromiseeConsent() public promiseeOnly {
         bill.promiseeConsent = true;
         bill.dateOfPromiseeConsent = block.timestamp;
@@ -76,7 +71,6 @@ contract BillOfExchange {
         }
     }
 
-    // if both consented, the date of entry is calculated. This will later lead to the NFT being minted.
     function setPromisorConsent() public promisorOnly {
         bill.promisorConsent = true;
         bill.dateOfPromisorConsent = block.timestamp;
@@ -112,24 +106,10 @@ contract BillOfExchange {
         selfdestruct(bill.promisee);
     }
 
-
-    // function to get bill data
-    // function getInfo() public returns(address, string calldata, address, string calldata, uint, string calldata, uint, string calldata, bool, uint, bool, uint, string calldata) {
-    //     return(bill.promisee, bill.promiseeName, bill.promisor, bill.promisorName, bill.billAmount, bill.billDescription, bill.dateOfEntry, bill.dateOfExpiry, bill.promiseeConsent, bill.dateOfPromiseeConsent, bill.promisorConsent, bill.dateOfPromiseeConsent, bill.naturalLanguage);
-    // }
-
+    // function to get struct info as tuple - can be improved through use of JSON file
     function getInfo() public view returns(billInfo memory){
         return bill;
     }
-
-
-
-    /**
-    *   Below functions still to be implemented. 
-    *   1. function to mint bill
-    *   2. acceptance leading to token burn
-    *   3. function to burn token
-    */
 
     // modifiers
 
