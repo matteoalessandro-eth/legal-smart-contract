@@ -1,0 +1,212 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_promiseeName",
+						"type": "string"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "acceptPayment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address payable",
+								"name": "promisee",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "promiseeName",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "promisor",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "promisorName",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "billAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "billDescription",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfEntry",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "dateOfExpiry",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "promiseeConsent",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfPromiseeConsent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "promisorConsent",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfPromisorConsent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "naturalLanguage",
+								"type": "string"
+							}
+						],
+						"internalType": "struct BillOfExchange.billInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "kill",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "payBill",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_promisorName",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "_promisor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_billAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_billDescription",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_dateOfExpiry",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_naturalLanguage",
+						"type": "string"
+					}
+				],
+				"name": "setDetails",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "setPromiseeConsent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "setPromisorConsent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Implement bills of exchange through a smart contrac      NOTE: This is purely a proof of concept, it is not to be used in real-life transactions as it has not been tested properly.      Made use of:   BillOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)",
+			"kind": "dev",
+			"methods": {},
+			"title": "Bills of Exchange Smart Contract",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/boe.sol": "BillOfExchange"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/boe.sol": {
+			"keccak256": "0x04c8d416366bb978fd24db3d07e0ee8ae4b76cdd50da92d327748b3c281a623b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://362e09fd1e46fcae280f802d41ab8192011171c50fab0eac44cbf37b84200208",
+				"dweb:/ipfs/Qmby3B8ygFFscm4A453njxFQbgqT3MvLpmUMv67XWvVGvK"
+			]
+		}
+	},
+	"version": 1
+}

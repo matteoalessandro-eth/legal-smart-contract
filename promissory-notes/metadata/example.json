@@ -1,0 +1,56 @@
+{
+    "name": "",
+    "description": "",
+    "external_url": "",
+    "attributes": [
+        {
+            "trait_type": "Drawer Address",
+            "value": ""
+        },
+        {
+            "trait_type": "Drawer Name",
+            "value": ""
+        },
+        {
+            "trait_type": "Holder Address",
+            "value": ""
+        },
+        {
+            "trait_type": "Holder Name",
+            "value": ""
+        },
+        {
+            "trait_type": "Promissory Note Amount",
+            "value": ""
+        },
+        {
+            "trait_type": "Promissory Note Description",
+            "value": ""
+        },
+        {
+            "trait_type": "Date of Entry",
+            "value": ""
+        },
+        {
+            "trait_type": "Date of Expiry",
+            "value": ""
+        },
+        {
+            "trait_type": "Drawer Consent",
+            "value": ""
+        },
+        {
+            "trait_type": "Drawer Consent Date",
+            "value": ""
+        },
+        {
+            "trait_type": "Holder Consent",
+            "value": ""
+        },
+        {
+            "trait_type": "Holder Consent Date",
+            "value": ""
+        }
+    ]
+
+}
