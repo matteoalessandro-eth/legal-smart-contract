@@ -1,37 +1,103 @@
 {
 	"compiler": {
-		"version": "0.8.6+commit.11564f7e"
+		"version": "0.8.7+commit.e28d00a7"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "previousOwner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
+						"internalType": "string",
+						"name": "_promiseeName",
+						"type": "string"
 					}
 				],
-				"name": "OwnershipTransferred",
-				"type": "event"
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
 				"inputs": [],
-				"name": "owner",
+				"name": "acceptPayment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getInfo",
 				"outputs": [
 					{
-						"internalType": "address",
+						"components": [
+							{
+								"internalType": "address payable",
+								"name": "promisee",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "promiseeName",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "promisor",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "promisorName",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "billAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "billDescription",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfEntry",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "dateOfExpiry",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "promiseeConsent",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfPromiseeConsent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "promisorConsent",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dateOfPromisorConsent",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "naturalLanguage",
+								"type": "string"
+							}
+						],
+						"internalType": "struct BillOfExchange.billInfo",
 						"name": "",
-						"type": "address"
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -39,38 +105,76 @@
 			},
 			{
 				"inputs": [],
-				"name": "renounceOwnership",
+				"name": "kill",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "payBill",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "_promisorName",
+						"type": "string"
+					},
+					{
 						"internalType": "address",
-						"name": "newOwner",
+						"name": "_promisor",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_billAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_billDescription",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_dateOfExpiry",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_naturalLanguage",
+						"type": "string"
 					}
 				],
-				"name": "transferOwnership",
+				"name": "setDetails",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "setPromiseeConsent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "setPromisorConsent",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
 		"devdoc": {
+			"details": "Implement bills of exchange through a smart contrac      NOTE: This is purely a proof of concept, it is not to be used in real-life transactions as it has not been tested properly.      Made use of:   BillOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)",
 			"kind": "dev",
-			"methods": {
-				"owner()": {
-					"details": "Returns the address of the current owner."
-				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
-				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
-				}
-			},
+			"methods": {},
+			"title": "Bills of Exchange Smart Contract",
 			"version": 1
 		},
 		"userdoc": {
@@ -81,9 +185,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"boe.sol": "BillOfExchange"
+			"contracts/boe.sol": "BillOfExchange"
 		},
-		"evmVersion": "berlin",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -95,28 +199,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"@openzeppelin/contracts/access/Ownable.sol": {
-			"keccak256": "0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673",
+		"contracts/boe.sol": {
+			"keccak256": "0x04c8d416366bb978fd24db3d07e0ee8ae4b76cdd50da92d327748b3c281a623b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://40fb1b5102468f783961d0af743f91b9980cf66b50d1d12009f6bb1869cea4d2",
-				"dweb:/ipfs/QmYqEbJML4jB1GHbzD4cUZDtJg5wVwNm3vDJq1GbyDus8y"
-			]
-		},
-		"@openzeppelin/contracts/utils/Context.sol": {
-			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
-				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
-			]
-		},
-		"boe.sol": {
-			"keccak256": "0x28e009149664d0c78ee313044a228738e083bd811495830b56366edc21c35fd2",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://45186edace41033d7657aa852e44f5a88ed0e82a53c8dde96b978da5d3d62469",
-				"dweb:/ipfs/QmcvVESaf1pKFkVWBktw8V8ohDAb6EgKwV5EmAJ2ptePt2"
+				"bzz-raw://362e09fd1e46fcae280f802d41ab8192011171c50fab0eac44cbf37b84200208",
+				"dweb:/ipfs/Qmby3B8ygFFscm4A453njxFQbgqT3MvLpmUMv67XWvVGvK"
 			]
 		}
 	},

@@ -42,15 +42,16 @@ contract BillOfExchange {
     billInfo private bill;
 
     // initial constructor setting party info and pushing it to struct
-    constructor(address _promisor, string memory _promiseeName, string memory _promisorName) public {
+    constructor(string memory _promiseeName) {
         bill.promisee = payable(msg.sender);
-        bill.promisor = _promisor;
         bill.promiseeName = _promiseeName;
-        bill.promisorName = _promisorName;
     }
 
     // function setting bill details and pushing them to struct
-    function setDetails (uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public promiseeOnly {
+    function setDetails (string memory _promisorName, address _promisor, uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public promiseeOnly {
+        require(_promisor!=bill.promisee, "Promisor and Promisee must be different parties");
+        bill.promisor = _promisor;
+        bill.promisorName = _promisorName;
         bill.billAmount = _billAmount;
         bill.billDescription = _billDescription;
         bill.dateOfExpiry = _dateOfExpiry;
