@@ -4,13 +4,13 @@ pragma solidity ^0.8.0;
 
 /**
 *
-*   @title Notes of Exchange Smart Contract
-*   @dev Implement notes of exchange through a smart contrac
+*   @title Promissory Notes Smart Contract
+*   @dev Implement promissory notes through a smart contrac
 *   
 *   NOTE: This is purely a proof of concept, it is not to be used in real-life transactions as it has not been tested properly.   
 *
 *   Made use of:
-*   NoteOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)
+*   BillOfSale.sol by Michael Rice (https://github.com/mrice/solidity-legal-contracts)
 */
 
 
