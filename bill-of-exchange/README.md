@@ -1,6 +1,6 @@
-### Smart Contracts used for Bills of Exchange
+### Smart Contracts used for Promissory Notes
 
-The first implementation which will be considered is the use of smart contracts to create bills of ex change ("BoE"). These will be analysed in the local (Maltese) context, and then a basic implementation of them is proposed. 
+The first implementation which will be considered is the use of smart contracts to create promissory notes. These will be analysed in the local (Maltese) context, and then a basic implementation of them is proposed. 
 
 #### Assumptions
 1. That methods for identity verification are available, and accepted legally.
@@ -16,24 +16,24 @@ The first implementation which will be considered is the use of smart contracts 
 #### Information Needed
 1. Identification of both parties
 
-2. Information about the BoE including: </br>
+2. Information about the note including: </br>
     a. Amount </br>
     b. Payment date </br>
     c. Jurisdiction </br>
 
-3. A URI to the natural language version of the BoE stored on IPFS
+3. A URI to the natural language version of the notestored on IPFS
 
 #### System Architecture
 
 1. A main smart contract is initiated by the Promisee (the person who is due the money)
-2. This smart contract will contain the following information about the BoE: </br>
+2. This smart contract will contain the following information about the Note: </br>
     a. Wallet addresses of both parties </br>
     b. Names of both parties </br>
-    c. Amount of the BoE </br>
-    d. Description of the BoE </br>
-    e. The date of expiry of the BoE (when the payment is due) - this is converted to a Unix timestamp from a regular date
-    f. The link to the natural language version of the BoE </br>
-    g. The date of entry of the BoE - this is automatically calculated when consent has been given by both parties </br>
+    c. Amount of the Note </br>
+    d. Description of the Note </br>
+    e. The date of expiry of the Note (when the payment is due) - this is converted to a Unix timestamp from a regular date
+    f. The link to the natural language version of the Note </br>
+    g. The date of entry of the Note - this is automatically calculated when consent has been given by both parties </br>
 3. The consent is then acquired from both parties, with the date being recorded
 4. The Promisor will then pay the amount due into the smart contract through a function, with the smart contract holding the amount until it is accepted by the Promisee
 5. Once the Promisee has accepted the payment, the funds are transferred to their address, and the token is burnt
