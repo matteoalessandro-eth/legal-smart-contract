@@ -4,19 +4,19 @@
     "external_url": "",
     "attributes": [
         {
-            "trait_type": "Promisor Address",
+            "trait_type": "Drawer Address",
             "value": ""
         },
         {
-            "trait_type": "Promisor Name",
+            "trait_type": "Drawer Name",
             "value": ""
         },
         {
-            "trait_type": "Promisee Address",
+            "trait_type": "Holder Address",
             "value": ""
         },
         {
-            "trait_type": "Promisee Name",
+            "trait_type": "Holder Name",
             "value": ""
         },
         {
@@ -36,19 +36,19 @@
             "value": ""
         },
         {
-            "trait_type": "Promisor Consent",
+            "trait_type": "Drawer Consent",
             "value": ""
         },
         {
-            "trait_type": "Promisor Consent Date",
+            "trait_type": "Drawer Consent Date",
             "value": ""
         },
         {
-            "trait_type": "Promisee Consent",
+            "trait_type": "Holder Consent",
             "value": ""
         },
         {
-            "trait_type": "Promisee Consent Date",
+            "trait_type": "Holder Consent Date",
             "value": ""
         }
     ]
