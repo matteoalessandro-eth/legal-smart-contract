@@ -17,24 +17,25 @@ pragma solidity ^0.8.0;
 contract BillOfExchange {
 
     // variables
-    bool private billPaid = false;
-    bool private paymentAccepted = false;
+    bool public billPaid = false;
+    bool public paymentAccepted = false;
+    uint public dateOfAcceptance;
 
 
     // struct containing bill info
     struct billInfo {
-        address payable promisee;
-        string promiseeName;
-        address promisor;
-        string promisorName;
+        address payable holder;
+        string holderName;
+        address drawer;
+        string drawerName;
         uint billAmount;
         string billDescription;
         uint dateOfEntry;
         string dateOfExpiry;
-        bool promiseeConsent;
-        uint dateOfPromiseeConsent;
-        bool promisorConsent;
-        uint dateOfPromisorConsent;
+        bool holderConsent;
+        uint dateOfHolderConsent;
+        bool drawerConsent;
+        uint dateOfDrawerConsent;
         string naturalLanguage;
     }
 
@@ -42,16 +43,16 @@ contract BillOfExchange {
     billInfo private bill;
 
     // initial constructor setting party info and pushing it to struct
-    constructor(string memory _promiseeName) {
-        bill.promisee = payable(msg.sender);
-        bill.promiseeName = _promiseeName;
+    constructor(string memory _holderName) {
+        bill.holder = payable(msg.sender);
+        bill.holderName = _holderName;
     }
 
     // function setting bill details and pushing them to struct
-    function setDetails (string memory _promisorName, address _promisor, uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public promiseeOnly {
-        require(_promisor!=bill.promisee, "Promisor and Promisee must be different parties");
-        bill.promisor = _promisor;
-        bill.promisorName = _promisorName;
+    function setDetails (string memory _drawerName, address _drawer, uint _billAmount, string memory _billDescription, string memory _dateOfExpiry, string memory _naturalLanguage) public holderOnly {
+        require(_drawer!=bill.holder, "Drawer and Holder must be different parties");
+        bill.drawer = _drawer;
+        bill.drawerName = _drawerName;
         bill.billAmount = _billAmount;
         bill.billDescription = _billDescription;
         bill.dateOfExpiry = _dateOfExpiry;
@@ -60,18 +61,18 @@ contract BillOfExchange {
 
     // function setting party consent and date of consent, and pushes them to struct
     // if both consented, the date of entry is calculated. 
-    function setPromiseeConsent() public promiseeOnly {
-        bill.promiseeConsent = true;
-        bill.dateOfPromiseeConsent = block.timestamp;
-        if (bill.promisorConsent == true) {
+    function setHolderConsent() public holderOnly {
+        bill.holderConsent = true;
+        bill.dateOfHolderConsent = block.timestamp;
+        if (bill.drawerConsent == true) {
             setDateOfEntry();
         }
     }
 
-    function setPromisorConsent() public promisorOnly {
-        bill.promisorConsent = true;
-        bill.dateOfPromisorConsent = block.timestamp;
-        if (bill.promiseeConsent == true) {
+    function setDrawerConsent() public drawerOnly {
+        bill.drawerConsent = true;
+        bill.dateOfDrawerConsent = block.timestamp;
+        if (bill.holderConsent == true) {
             setDateOfEntry();
         }
     }
@@ -84,23 +85,24 @@ contract BillOfExchange {
 
     // function to submit payment
 
-    function payBill () public payable needConsent promisorOnly {
+    function payBill () public payable needConsent drawerOnly {
         require(msg.value == bill.billAmount, "You must pay the amount stipulated");
         billPaid = true;
     }
 
-    // function for promisee to accept payment, leading to contract being killed (still needs to have function which burns token when this is done)
+    // function for holder to accept payment, leading to contract being killed (still needs to have function which burns token when this is done)
 
-    function acceptPayment () public promiseeOnly billHasBeenPaid {
+    function acceptPayment () public holderOnly billHasBeenPaid {
         paymentAccepted = true;
-        bill.promisee.transfer(bill.billAmount);
+        dateOfAcceptance = block.timestamp;
+        bill.holder.transfer(bill.billAmount);
         kill();
     }
 
     // function to kill smart contract once it has been concluded
 
-    function kill() promiseeOnly public {
-        selfdestruct(bill.promisee);
+    function kill() holderOnly public {
+        selfdestruct(bill.holder);
     }
 
     // function to get struct info as tuple - can be improved through use of JSON file
@@ -110,23 +112,23 @@ contract BillOfExchange {
 
     // modifiers
 
-    modifier promisorOnly(){
-        require(msg.sender == bill.promisor, "only the promisor can send this message");
+    modifier drawerOnly(){
+        require(msg.sender == bill.drawer, "only the drawer can send this message");
         _;
     }
 
-    modifier promiseeOnly(){
-        require(msg.sender == bill.promisee, "only the promisee can send this message");
+    modifier holderOnly(){
+        require(msg.sender == bill.holder, "only the holder can send this message");
         _;
     }
 
     modifier partiesOnly(){
-        require(msg.sender == bill.promisor || msg.sender == bill.promisee, "only parties to this agreement can send this message");
+        require(msg.sender == bill.drawer || msg.sender == bill.holder, "only parties to this agreement can send this message");
         _;
     }
 
     modifier needConsent(){
-        require(bill.promiseeConsent == true && bill.promisorConsent == true);
+        require(bill.holderConsent == true && bill.drawerConsent == true);
         _;
     }
 
