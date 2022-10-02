@@ -9,3 +9,6 @@ The second implementation I will be considering is the use of smart contracts fo
 1. The party that needs the document verified uploads it to IPFS
 2. The document is verified by a trusted individual, such as lawyers or notaries
 3. The verification is attached to the document, allowingf the holder to use it and prove its authenticity without needing to re-verify it every time
+
+#### Existing Systems Considered
+1. <a href="https://github.com/nikhildsahu/E-Certify>E-Certify by Nikhildsahu</a>
