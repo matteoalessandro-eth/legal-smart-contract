@@ -12,12 +12,12 @@ The second implementation I will be considering is the use of smart contracts fo
 
 #### Existing Systems Considered
 1. [E-Certify by Nikhildsahu](https://github.com/nikhildsahu/E-Certify)
-2. [Blockchain Certificate Veracity by Vinayakrit](https://github.com/vinayakrit/Blockchain-certificate-verify)
+2. [Blockchain Certificate Veracity by Vinayakrit](https://github.com/vinayakrit/Blockchain-certicate-verify)
 3. [Document Verification on Blockchain by Shivasai780](https://github.com/shivasai780/Document-verification-on-Blockchain)
 4. [Certoshi by Thawalk](https://github.com/thawalk/Certoshi)
 5. [Certificate Verification DApp by Kreloaded](https://github.com/kreloaded/certificate-verification-dapp)
 6. [Ether Doc Cert by Datts68](https://github.com/datts68/ether-doc-cert)
-7. [Academic Certificates on Blockchain by Tasinlshmam](https://github.com/tasinlshmam/blockchain-academic-certificates)
+7. [Academic Certificates on Blockchain by Tasinlshmam](https://github.com/TasinIshmam/blockchain-academic-certificates)
 8. [Proof Of Existence by Qinfengling](https://github.com/proofofexistence/proofofexistence)
 9. [Crypto Stamp by Rumkin](https://github.com/rumkin/crypto-stamp)
 10. [DocChain by Abkafi001](https://github.com/abkafi001/DocChain)
