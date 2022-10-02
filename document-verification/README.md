@@ -4,3 +4,8 @@ The second implementation I will be considering is the use of smart contracts fo
 
 #### Assumptions
 1. That methods for identity verification are available, and accepted legally. 
+
+#### Proposed Method
+1. The party that needs the document verified uploads it to IPFS
+2. The document is verified by a trusted individual, such as lawyers or notaries
+3. The verification is attached to the document, allowingf the holder to use it and prove its authenticity without needing to re-verify it every time
