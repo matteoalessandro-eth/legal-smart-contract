@@ -22,3 +22,8 @@ The second implementation I will be considering is the use of smart contracts fo
 9. [Crypto Stamp by Rumkin](https://github.com/rumkin/crypto-stamp)
 10. [DocChain by Abkafi001](https://github.com/abkafi001/DocChain)
 11. [Ethereum Document Authentication by Harpreetvirkk](https://github.com/harpreetvirkk/Ethereum-Document-Authentication)
+
+#### Notes on documentVerification.sol
+The first implementation of this concept is a very rudimentary one. I will now be working on creating a system in which an authorised person (a lawyer, notary public etc.) would have a contract through which clients can request verification, which is then issued by the authorised person. Possibly, a certificate of authenticity in the form of an NFT could be created, which is sent to the client.
+
+documentVerification uses the IPFS link, which could contain sensitive data. Another way to do this would be to use SHA-2 hashing to store the value in the NFT, which provides privacy.
