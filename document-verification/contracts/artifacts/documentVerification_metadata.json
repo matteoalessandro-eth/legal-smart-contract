@@ -13,13 +13,36 @@
 						"type": "string"
 					},
 					{
+						"internalType": "string",
+						"name": "_docOwnerName",
+						"type": "string"
+					},
+					{
 						"internalType": "address",
 						"name": "_verifier",
 						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_verifierName",
+						"type": "string"
 					}
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "dateOfVerification",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -29,6 +52,19 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "docOwnerName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -49,7 +85,33 @@
 			},
 			{
 				"inputs": [],
+				"name": "getVerification",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "ipfsLink",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "textDate",
 				"outputs": [
 					{
 						"internalType": "string",
@@ -75,6 +137,25 @@
 			},
 			{
 				"inputs": [],
+				"name": "verifierName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_dateOfVerification",
+						"type": "string"
+					}
+				],
 				"name": "verifyDocument",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -111,11 +192,11 @@
 	},
 	"sources": {
 		"contracts/documentVerification.sol": {
-			"keccak256": "0x6a0962864a477a167dbde582ce847a65b31ee7e04bf5866f08037e47edc72530",
+			"keccak256": "0x534fc4ead94c720dd09f1dd4487f69a07fbf18da16b2f57937ea7f724350eaab",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e957415c9df6b1c8b42b5ef8ca2fd51c6930609484fbf6129c0431aa912cb8a0",
-				"dweb:/ipfs/QmVw5MjxUxPH1kyY2sA6zEuup7vE8PhJW2LvMtNaHx5esn"
+				"bzz-raw://b204c2b05f50665130234500a969f37007c021ef9f6bd8a7dfb5603417d05d42",
+				"dweb:/ipfs/QmZLPAT7791MkkhVbL2t6fdK3Sc3QZrk4hmVWexAw2bdEK"
 			]
 		}
 	},
