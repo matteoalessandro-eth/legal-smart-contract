@@ -13,7 +13,6 @@ pragma solidity ^0.8.0;
 
  contract documentVerification {
 
-    address docOwner;
     string docOwnerName;
     address verifier;
     string verifierName;
@@ -26,7 +25,6 @@ pragma solidity ^0.8.0;
 
 
     constructor(string memory _docOwnerName, address _verifier, string memory _verifierName, string memory _ipfsHash){
-        docOwner = msg.sender;
         docOwnerName = _docOwnerName;
         verifier = _verifier;
         verifierName = _verifierName;
@@ -38,18 +36,17 @@ pragma solidity ^0.8.0;
         bytes memory verification = abi.encodePacked(
             "I, ", verifierName, ", confirm that the following document: ",
             ipfsHash, " is a certified true copy of the original. ",
-            dateOfVerification);
+            dateOfVerification,
+            "|| Document Owner: ", docOwnerName);
         verifiedDocuments[ipfsHash] = string(verification);
     }
 
     function getVerification(string memory _hashToVerify) public view returns (string memory){
+        if (bytes(verifiedDocuments[_hashToVerify]).length == 0) {
+            revert("Document not verified.");
+        }
+        
         return verifiedDocuments[_hashToVerify];
-    }
-
-
-    modifier documentHasBeenVerified() {
-        require(documentVerified == true, "Document needs to be verified before this can be called");
-        _;
     }
 
     modifier onlyVerifier() {
