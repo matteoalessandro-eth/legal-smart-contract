@@ -24,6 +24,9 @@ The second implementation I will be considering is the use of smart contracts fo
 11. [Ethereum Document Authentication by Harpreetvirkk](https://github.com/harpreetvirkk/Ethereum-Document-Authentication)
 
 #### Notes on documentVerification.sol
-The [first implementation](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/documentVerification.sol) of this concept is a very rudimentary one. I will now be working on creating a system in which an authorised person (a lawyer, notary public etc.) would have a contract through which clients can request verification, which is then issued by the authorised person. Possibly, a certificate of authenticity in the form of an NFT could be created, which is sent to the client.
+The [first implementation](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/documentVerification.sol) of this concept is a very rudimentary one. 
 
-documentVerification uses the IPFS link, which could contain sensitive data. Another way to do this would be to use SHA-2 hashing to store the value in the NFT, which provides privacy.
+[documentVerification2.0](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/documentVerification2.0.sol) uses a SHA-2 256 hash of the IPFS link for more security, and stores the verified documents using a mapping, in which the key is the IPFS hash and the value is the verification text.
+
+I will now be working on creating a system in which an authorised person (a lawyer, notary public etc.) would have a contract through which clients can request verification, which is then issued by the authorised person. Possibly, a certificate of authenticity in the form of an NFT could be created, which is sent to the client.
+
