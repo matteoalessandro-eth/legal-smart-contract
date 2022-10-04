@@ -42,15 +42,6 @@ pragma solidity ^0.8.0;
         verifiedDocuments[ipfsHash] = string(verification);
     }
 
-    // function getVerification() public view documentHasBeenVerified returns (string memory) {
-    //     bytes memory verification = abi.encodePacked(
-    //         "I, ", verifierName, " confirm that the following document: ",
-    //         ipfsLink, " is a certified true copy of the original.",
-    //         dateOfVerification);
-
-    //     return string(verification);
-    // }
-
     function getVerification(string memory _hashToVerify) public view returns (string memory){
         return verifiedDocuments[_hashToVerify];
     }
