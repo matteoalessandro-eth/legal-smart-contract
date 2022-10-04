@@ -28,5 +28,8 @@ The [first implementation](https://github.com/matteoalessandro-eth/legal-smart-c
 
 [documentVerification2.0](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/documentVerification2.0.sol) uses a SHA-2 256 hash of the IPFS link for more security, and stores the verified documents using a mapping, in which the key is the IPFS hash and the value is the verification text.
 
-I will now be working on creating a system in which an authorised person (a lawyer, notary public etc.) would have a contract through which clients can request verification, which is then issued by the authorised person. Possibly, a certificate of authenticity in the form of an NFT could be created, which is sent to the client.
+#### Notes on certifiedCopyStamp.sol
+This [smart contract](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/certifiedCopyStamp.sol) allows an authorised person to certify documents based on their IPFS hash, and is more modular than the documentVerification smart contract, since each authorised person only needs one 'stamp' contract to certify any document.
 
+##### Limitations
+The contract is not efficient with gas, which means deployment would have to take place on chains such as Polygon. I am also unsure about the security of the contract.
