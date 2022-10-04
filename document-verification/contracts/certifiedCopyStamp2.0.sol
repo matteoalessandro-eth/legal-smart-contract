@@ -36,16 +36,13 @@ contract certifiedCopyStamp is Ownable {
 
     string dateOfCertificationUnix;
 
-    address docOwner;
-
     mapping(string => bytes) certifiedDocuments;
 
     constructor(){
         certifierAddress = Strings.toHexString(uint160(msg.sender), 20);
     }
 
-    function certifyDocument(string memory _ipfsHash, string memory _dateOfCertificationText, address _docOwner) public onlyOwner {
-        docOwner = _docOwner;
+    function certifyDocument(string memory _ipfsHash, string memory _dateOfCertificationText) public onlyOwner {
         ipfsHash = _ipfsHash;
         dateOfCertificationText = _dateOfCertificationText;
         dateOfCertificationUnix = Strings.toString(block.timestamp);
