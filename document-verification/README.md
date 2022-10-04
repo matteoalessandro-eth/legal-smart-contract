@@ -8,7 +8,7 @@ The second implementation I will be considering is the use of smart contracts fo
 #### Proposed Method
 1. The party that needs the document verified uploads it to IPFS
 2. The document is verified by a trusted individual, such as lawyers or notaries
-3. The verification is attached to the document, allowingf the holder to use it and prove its authenticity without needing to re-verify it every time
+3. The verification is attached to the document, allowing the holder to use it and prove its authenticity without needing to re-verify it every time
 
 #### Existing Systems Considered
 1. [E-Certify by Nikhildsahu](https://github.com/nikhildsahu/E-Certify)
@@ -31,5 +31,10 @@ The [first implementation](https://github.com/matteoalessandro-eth/legal-smart-c
 #### Notes on certifiedCopyStamp.sol
 This [smart contract](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/certifiedCopyStamp.sol) allows an authorised person to certify documents based on their IPFS hash, and is more modular than the documentVerification smart contract, since each authorised person only needs one 'stamp' contract to certify any document.
 
-##### Limitations
-The contract is not efficient with gas, which means deployment would have to take place on chains such as Polygon. I am also unsure about the security of the contract.
+#### Notes on certifiedCopyStamp2.0.sol and certifiedCopyNFT.sol
+The [second version](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/certifiedCopyStamp2.0.sol) of certifiedCopyStamp allows the certifier to issue an NFT which has the metadata of the certification stored directly into it. This is done by calling the [certifiedCopyNFT](https://github.com/matteoalessandro-eth/legal-smart-contract/blob/main/document-verification/contracts/certifiedCopyNFT.sol) contract, which is based on the ERC721URIStorage from OpenZeppelin, and contains the actual mint function. Initial tests on remix seem successful, however I am yet to test it on public testnets.
+
+<img width="501" alt="####Capture" src="https://user-images.githubusercontent.com/114187992/193943103-e75c03f4-4ae5-43b2-b157-b344b312b168.PNG">
+
+#### Limitations
+The contracts are not efficient with gas, which means deployment would have to take place on chains such as Polygon. I am also unsure about the security of the contracts.
